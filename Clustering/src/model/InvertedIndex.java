@@ -632,16 +632,17 @@ public class InvertedIndex {
         for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
             Cluster cluster = new Cluster(i);
             cluster.setCenter(listOfDocument.get(i));
+            listOfCluster.add(cluster);
+            listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i));
         }
 
         // lalu lakukan penghitungan similarity antara dokumen 
         // dengan masing-masing center
+        ArrayList<DocumentToClusterSimilarity> listOfSimilarity = new ArrayList<>();
         for (int i = 0; i < listOfDocument.size(); i++) {
             // per epoch
             Document doc = listOfDocument.get(i);
             // hitung similarity
-            ArrayList<DocumentToClusterSimilarity> listOfSimilarity
-                    = new ArrayList<DocumentToClusterSimilarity>();
             for (int j = 0; j < listOfCluster.size(); j++) {
                 double sim = getCosineSimilarity(listOfDocument.get(i).getListOfClusteringPosting(),
                         listOfCluster.get(j).getCenter().getListOfClusteringPosting());
@@ -654,7 +655,7 @@ public class InvertedIndex {
             // asumsi sorting descending , similarity terurut dari besar ke kecil
             // tetapkan document ke cluster dengan similarity terbesar
             // anda juga bisa tetapkan dengan KNN
-            listOfSimilarity.get(0).getCluster().getMember().add(doc);
+            listOfSimilarity.get(i).getCluster().getMember().add(doc);
         }
     }
 
