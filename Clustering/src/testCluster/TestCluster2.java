@@ -35,6 +35,7 @@ public class TestCluster2 {
         index.makeDictionaryWithTermNumber();
         // bikin preclustering
         index.preClustering();
+        index.clustering();
         for (int i = 0; i < index.getListOfDocument().size(); i++) {
             ArrayList<Posting> listPosting = 
                     index.getListOfDocument().get(i).getListOfClusteringPosting();
