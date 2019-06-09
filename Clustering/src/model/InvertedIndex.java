@@ -620,7 +620,6 @@ public class InvertedIndex {
             int idDoc = listOfDocument.get(i).getId();
             // buat posting dengan nilai TF-IDFnya
             listOfDocument.get(i).setListOfClusteringPosting(makeTFIDF(idDoc));
-
         }
     }
 
@@ -657,5 +656,9 @@ public class InvertedIndex {
             // anda juga bisa tetapkan dengan KNN
             listOfSimilarity.get(0).getCluster().getMember().add(doc);
         }
+    }
+
+    public void centerCluster() {
+
     }
 }
