@@ -26,7 +26,7 @@ import org.apache.lucene.util.Version;
 
 /**
  *
- * @author puspaningtyas
+ * @author admin
  */
 public class Document implements Comparable<Document> {
 

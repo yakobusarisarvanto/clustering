@@ -18,7 +18,6 @@ public class InvertedIndex {
     private ArrayList<Document> listOfDocument = new ArrayList<>();
     private ArrayList<Term> dictionary = new ArrayList<>();
     private ArrayList<Cluster> listOfCluster = new ArrayList<>();
-    public static final int NUMBER_OF_DOCUMENT_CLUSTER = 2;
 
     public InvertedIndex() {
     }
@@ -621,10 +620,10 @@ public class InvertedIndex {
     /**
      * Fungsi untuk clustering
      */
-    public void clustering() {
+    public void clustering(int jumCluster) {
         // buat arraylistofCluster sejumlah kelompok yang sudah ditentukan
         // dan tetapkan N document awal sebagai pusat cluster
-        for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
+        for (int i = 0; i < jumCluster; i++) {
             Cluster cluster = new Cluster(i);
             cluster.setCenter(listOfDocument.get(i));
             listOfCluster.add(cluster);

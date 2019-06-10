@@ -15,11 +15,13 @@ import model.Posting;
  * @author admin
  */
 public class TestCluster2 {
+
     public static void main(String[] args) {
         // seting dokumen
         Document doc1 = new Document(1, "Fahri Hamzah Usul Ibu Kota Pindah ke Kepulauan Seribu");
         Document doc2 = new Document(2, "Gaya Nyentrik Menteri Susi Saat Pimpin Penenggelaman 13 Kapal Vietnam di Kalbar");
         Document doc3 = new Document(3, "TNI AL: KRI Tjiptadi-381 Diprovokasi Kapal Pengawas Ikan Vietnam ");
+        Document doc4 = new Document(4, "TNI AL: KRI Tjiptadi-381 Diprovokasi Kapal Pengawas Ikan Vietnam ");
 
         // buat object invertedIndex
         InvertedIndex index = new InvertedIndex();
@@ -27,23 +29,33 @@ public class TestCluster2 {
         doc1.IndonesiaStemming();
         doc2.IndonesiaStemming();
         doc3.IndonesiaStemming();
+        doc4.IndonesiaStemming();
         // tmbahkan document ke index
         index.addNewDocument(doc1);
         index.addNewDocument(doc2);
         index.addNewDocument(doc3);
+        index.addNewDocument(doc4);
         // bikin dictionary
         index.makeDictionaryWithTermNumber();
         // bikin preclustering
         index.preClustering();
-        index.clustering();
+        index.clustering(3);
+//        String[][] tabel = new String[index.getListOfDocument().size()][1];
+//        int a = 0;
         for (int i = 0; i < index.getListOfCluster().size(); i++) {
-            System.out.println("Id Cluster = "+index.getListOfCluster().get(i).getIdCluster());
-            ArrayList<Document> listDoc =  index.getListOfCluster().get(i).getMember();
+//            tabel[a][0] = "Id Cluster";
+//            tabel[a][1] = String.valueOf(index.getListOfCluster().get(i).getIdCluster());
+//            a++;
+            System.out.println("Id Cluster = " + (index.getListOfCluster().get(i).getIdCluster()+1));
+            ArrayList<Document> listDoc = index.getListOfCluster().get(i).getMember();
             for (int j = 0; j < listDoc.size(); j++) {
-                System.out.println(listDoc.get(j).getId());
+//                tabel[a][0] = String.valueOf(listDoc.get(j).getId());
+//                tabel[a][1] = listDoc.get(j).getTitle();
+//                a++;
+                System.out.println(listDoc.get(j).getId() + " " + listDoc.get(j).getTitle());
             }
-        
+
         }
-        
+
     }
 }
