@@ -37,7 +37,7 @@ public class TestCluster2 {
         index.preClustering();
         index.clustering();
         for (int i = 0; i < index.getListOfCluster().size(); i++) {
-            System.out.println("IdDoc = "+index.getListOfCluster().get(i).getIdCluster());
+            System.out.println("Id Cluster = "+index.getListOfCluster().get(i).getIdCluster());
             ArrayList<Document> listDoc =  index.getListOfCluster().get(i).getMember();
             for (int j = 0; j < listDoc.size(); j++) {
                 System.out.println(listDoc.get(j).getId());
