@@ -5,7 +5,11 @@
  */
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +31,7 @@ import org.apache.lucene.util.Version;
 public class Document implements Comparable<Document> {
 
     private int id;
+    private String title; // atribut title yang dianalisis
     private String content; // atribut content yang dianalisis
     private String realContent; // atribut content asli
     // list posting untuk keperluan clustering document
@@ -48,6 +53,19 @@ public class Document implements Comparable<Document> {
         this.id = id;
         this.content = content;
         this.realContent = content;
+    }
+    public Document(int id, String title, String content) {
+        this.id = id;
+        this.content = content;
+        this.realContent = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -136,11 +154,38 @@ public class Document implements Comparable<Document> {
     /**
      * Fungsi untuk membaca sebuah file *.txt dan hasil baca dimasukkan ke
      * atribut content
+     * @param idDoc
+     * @param file
      */
     public void readFile(int idDoc, File file) {
-        // simpan idDoc
+        // simpan id doc
         this.id = idDoc;
+        //baca judul
+        String fileName = file.getName();
+        this.title = fileName.substring(0, fileName.lastIndexOf("."));
         // baca file
+        try {
+            // menyimpan file ke objek bacaFile
+            FileReader bacaFile = new FileReader(file);
+            // menyiapkan variable str bertipe String
+            try ( // menyimpan bacaFile ke bjek bufReader
+                    BufferedReader bufReader = new BufferedReader(bacaFile)) {
+                // menyiapkan variable str bertipe String
+                String str;
+                // melakukan looping
+                while ((str = bufReader.readLine()) != null) {
+                    // menyimpan str ke content
+                    this.setRealContent(str);
+                    this.setContent(str);
+                }
+                // menutup bufReader
+            }
+        } // apabila terjadi error maka akan menampilkan pesan
+        catch (FileNotFoundException f) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
     }
 
     @Override
@@ -267,7 +312,5 @@ public class Document implements Comparable<Document> {
     public void setListOfClusteringPosting(ArrayList<Posting> listOfClusteringPosting) {
         this.listOfClusteringPosting = listOfClusteringPosting;
     }
-
-    
 
 }
