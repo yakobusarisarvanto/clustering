@@ -8,8 +8,6 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  *
@@ -633,12 +631,6 @@ public class InvertedIndex {
             listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i));
         }
 
-//        for (int i = 0; i < listOfCluster.size(); i++) {
-//            ArrayList<Posting> list = getSortedPostingListWithTermNumberCluster(i);
-//            for (int j = 0; j < listOfCluster.get(i).getMember().size(); j++) {
-//                listOfCluster.get(i).getMember();
-//            }
-//        }
         // lalu lakukan penghitungan similarity antara dokumen 
         // dengan masing-masing center
         for (int i = 0; i < listOfDocument.size(); i++) {
@@ -662,24 +654,4 @@ public class InvertedIndex {
         }
     }
 
-    public ArrayList<Posting> getSortedPostingListWithTermNumberCluster(int x) {
-        // siapkan posting List
-        ArrayList<Posting> list = new ArrayList<>();
-        // buat node Posting utk listofdocument
-        for (int i = 0; i < listOfCluster.get(x).getMember().size(); i++) {
-            // buat listOfTerm dari document ke -i
-            //String[] termResult = getListOfDocument().get(i).getListofTerm();
-            ArrayList<Posting> postingDocument = listOfCluster.get(x).getMember().get(i).getListofPosting();
-            // loop sebanyak term dari document ke i
-            for (int j = 0; j < postingDocument.size(); j++) {
-                // ambil objek posting
-                Posting tempPosting = postingDocument.get(j);
-                // cek kemunculan term
-                list.add(tempPosting);
-            }
-        }
-        // urutkan
-        Collections.sort(list);
-        return list;
-    }
 }
