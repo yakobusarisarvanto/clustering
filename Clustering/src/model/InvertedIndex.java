@@ -8,6 +8,7 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  *
@@ -624,10 +625,12 @@ public class InvertedIndex {
         // buat arraylistofCluster sejumlah kelompok yang sudah ditentukan
         // dan tetapkan N document awal sebagai pusat cluster
         for (int i = 0; i < jumCluster; i++) {
+            Random r = new Random();
+            int rand = r.nextInt(30);
             Cluster cluster = new Cluster(i);
-            cluster.setCenter(listOfDocument.get(i));
+            cluster.setCenter(listOfDocument.get(rand));
             listOfCluster.add(cluster);
-            listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i));
+            listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i+1));
         }
 
         // lalu lakukan penghitungan similarity antara dokumen 

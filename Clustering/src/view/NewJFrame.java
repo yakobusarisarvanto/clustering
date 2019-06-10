@@ -222,11 +222,12 @@ public class NewJFrame extends javax.swing.JFrame {
         int jumCluster = Integer.parseInt(TextCluster.getText());
         index.preClustering();
         index.clustering(jumCluster);
-        String[][] tabel = new String[index.getListOfDocument().size() + index.getListOfCluster().size()][2];
+        int jum = index.getListOfDocument().size() + index.getListOfCluster().size();
+        String[][] tabel = new String[jum][2];
         int a = 0;
         for (int i = 0; i < index.getListOfCluster().size(); i++) {
             tabel[a][0] = "Id Cluster";
-            tabel[a][1] = Integer.toString(index.getListOfCluster().get(i).getIdCluster());
+            tabel[a][1] = Integer.toString((index.getListOfCluster().get(i).getIdCluster()+1));
             a++;
             ArrayList<Document> listDoc = index.getListOfCluster().get(i).getMember();
             for (int j = 0; j < listDoc.size(); j++) {
@@ -235,10 +236,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 a++;
             }
         }
-        for (int i = 0; i < index.getListOfDocument().size() + index.getListOfCluster().size(); i++) {
+        //menampilkan hasil cluster ke dalam tabel
+        for (int i = 0; i < jum; i++) {
             Tabel.setValueAt(tabel[i][0], i, 0);
             Tabel.setValueAt(tabel[i][1], i, 1);
-            
         }
     }//GEN-LAST:event_TombolClusteringActionPerformed
 
