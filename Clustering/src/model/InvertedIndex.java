@@ -625,8 +625,10 @@ public class InvertedIndex {
         // buat arraylistofCluster sejumlah kelompok yang sudah ditentukan
         // dan tetapkan N document awal sebagai pusat cluster
         for (int i = 0; i < jumCluster; i++) {
+            Random rand = new Random();
+            int n = rand.nextInt(20);
             Cluster cluster = new Cluster(i);
-            cluster.setCenter(listOfDocument.get(i));
+            cluster.setCenter(listOfDocument.get(n));
             listOfCluster.add(cluster);
             listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i + 1));
         }
