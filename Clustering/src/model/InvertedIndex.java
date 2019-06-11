@@ -679,5 +679,4 @@ public class InvertedIndex {
             }
         }
     }
-
 }
