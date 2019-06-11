@@ -625,12 +625,10 @@ public class InvertedIndex {
         // buat arraylistofCluster sejumlah kelompok yang sudah ditentukan
         // dan tetapkan N document awal sebagai pusat cluster
         for (int i = 0; i < jumCluster; i++) {
-            Random r = new Random();
-            int rand = r.nextInt(30);
             Cluster cluster = new Cluster(i);
-            cluster.setCenter(listOfDocument.get(rand));
+            cluster.setCenter(listOfDocument.get(i));
             listOfCluster.add(cluster);
-            listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i+1));
+            listOfCluster.get(i).getCenter().setListOfClusteringPosting(makeTFIDF(i + 1));
         }
 
         // lalu lakukan penghitungan similarity antara dokumen 
@@ -640,19 +638,29 @@ public class InvertedIndex {
             Document doc = listOfDocument.get(i);
             // hitung similarity
             ArrayList<DocumentToClusterSimilarity> listOfSimilarity = new ArrayList<>();
-            for (int j = 0; j < listOfCluster.size(); j++) {
+
+            boolean term = true;
+
+            for (int j = 0; j < listOfCluster.size() && term; j++) {
                 double sim = getCosineSimilarity(doc.getListOfClusteringPosting(),
                         listOfCluster.get(j).getCenter().getListOfClusteringPosting());
                 DocumentToClusterSimilarity simDoc = new DocumentToClusterSimilarity(sim,
                         listOfCluster.get(j));
                 listOfSimilarity.add(simDoc);
+
+                if (listOfCluster.get(j).getCenter().getId() == listOfDocument.get(i).getId()) {
+                    listOfSimilarity.get(listOfSimilarity.size() - 1).getCluster().getMember().add(doc);
+                    term = false;
+                }
             }
-            // sorting similarity
-            Collections.sort(listOfSimilarity);
-            // asumsi sorting descending , similarity terurut dari besar ke kecil
-            // tetapkan document ke cluster dengan similarity terbesar
-            // anda juga bisa tetapkan dengan KNN
-            listOfSimilarity.get(0).getCluster().getMember().add(doc);
+            if (term) {
+                // sorting similarity
+                Collections.sort(listOfSimilarity);
+                // asumsi sorting descending , similarity terurut dari besar ke kecil
+                // tetapkan document ke cluster dengan similarity terbesar
+                // anda juga bisa tetapkan dengan KNN
+                listOfSimilarity.get(0).getCluster().getMember().add(doc);
+            }
         }
     }
 

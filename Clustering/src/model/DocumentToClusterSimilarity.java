@@ -51,7 +51,7 @@ public class DocumentToClusterSimilarity implements Comparable<DocumentToCluster
 
     @Override
     public int compareTo(DocumentToClusterSimilarity o) {
-        return Double.compare(similarity, o.getSimilarity());
+        return Double.compare(o.getSimilarity(), similarity);
     }
     
 }

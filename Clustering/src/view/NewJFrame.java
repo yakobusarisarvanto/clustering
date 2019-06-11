@@ -226,12 +226,12 @@ public class NewJFrame extends javax.swing.JFrame {
         String[][] tabel = new String[jum][2];
         int a = 0;
         for (int i = 0; i < index.getListOfCluster().size(); i++) {
-            tabel[a][0] = "Id Cluster";
-            tabel[a][1] = Integer.toString((index.getListOfCluster().get(i).getIdCluster()+1));
+            tabel[a][0] = "Id Cluster = " + Integer.toString(index.getListOfCluster().get(i).getIdCluster());
+            tabel[a][1] = "Titik Cluster = Doc " + Integer.toString(index.getListOfCluster().get(i).getCenter().getId());
             a++;
             ArrayList<Document> listDoc = index.getListOfCluster().get(i).getMember();
             for (int j = 0; j < listDoc.size(); j++) {
-                tabel[a][0] = String.valueOf(listDoc.get(j).getId());
+                tabel[a][0] = "Doc" + String.valueOf(listDoc.get(j).getId());
                 tabel[a][1] = listDoc.get(j).getTitle();
                 a++;
             }
